@@ -6,7 +6,7 @@ It uses the following APIs and technologies:
 
 * REST requests from the Firebase Database (JSON)
 * Realtime requests (JSON & URLStream)
-* User Auth with Facebook Twitter and Google using Firebase Auth
+* User Auth with Facebook, Twitter and Google using Firebase Auth
 * File uploading and downloading with Firebase Storage
 * CameraUI & CameraRoll
 * Geolocation API
@@ -140,10 +140,7 @@ service firebase.storage {
     match /images/{allPaths=**} {
       allow read;
       allow write: if request.auth != null;
-    }
-    match /posts/{allPaths=**} {
-      allow read, write;
-    }    
+    }   
   }
 }
 ```
