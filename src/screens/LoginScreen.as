@@ -230,6 +230,7 @@ package screens
 			var myObject:Object = new Object();
 			myObject.requestUri = requestUri;
 			myObject.sessionId = sessionId;
+			myObject.returnSecureToken = true;
 
 			var request:URLRequest = new URLRequest(Constants.FIREBASE_VERIFY_ASSERTION_URL);
 			request.method = URLRequestMethod.POST;

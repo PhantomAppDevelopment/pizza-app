@@ -331,8 +331,8 @@ package galleryScreens
 			var header:URLRequestHeader = new URLRequestHeader("Content-Type", "application/json");
 
 			var myObject:Object = new Object();
-			myObject.grant_type = "authorization_code";
-			myObject.code = Main.profile.idToken;
+			myObject.grant_type = "refresh_token";
+			myObject.refresh_token = Main.profile.refreshToken;
 
 			var request:URLRequest = new URLRequest(Constants.FIREBASE_AUTH_TOKEN_URL);
 			request.method = URLRequestMethod.POST;

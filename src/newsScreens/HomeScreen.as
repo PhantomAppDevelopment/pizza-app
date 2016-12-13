@@ -176,7 +176,6 @@ package newsScreens
 		override public function dispose():void
 		{
 			cachedIcons = null;
-
 			super.dispose();
 		}
 
