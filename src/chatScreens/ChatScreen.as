@@ -222,7 +222,7 @@ package chatScreens
 
 		private function messageSent(event:flash.events.Event):void
 		{
-			event.currentTarget.addEventListener(flash.events.Event.COMPLETE, messageSent);
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, messageSent);
 			messageInput.text = "";
 		}
 

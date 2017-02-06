@@ -315,7 +315,7 @@ package galleryScreens
 
 		private function thumbnailUploaded(event:flash.events.Event):void
 		{
-			event.currentTarget.addEventListener(flash.events.Event.COMPLETE, thumbnailUploaded);
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, thumbnailUploaded);
 
 			var rawData:Object = JSON.parse(event.currentTarget.data);
 			thumbUrl = rawData.name;
@@ -342,7 +342,7 @@ package galleryScreens
 
 		private function imageUploaded(event:flash.events.Event):void
 		{
-			event.currentTarget.addEventListener(flash.events.Event.COMPLETE, imageUploaded);
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, imageUploaded);
 
 			//Once the file has been uploaded we add a reference to it to the database
 

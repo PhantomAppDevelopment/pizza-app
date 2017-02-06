@@ -161,6 +161,8 @@ package screens
 
 		private function authURLCreated(event:flash.events.Event):void
 		{
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, authURLCreated);
+
 			var rawData:Object = JSON.parse(event.currentTarget.data);
 
 			//We store the sessionId value from the response
@@ -246,6 +248,8 @@ package screens
 
 		private function registerComplete(event:flash.events.Event):void
 		{
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, registerComplete);
+
 			//The profile data is returned abck from Firebase, we call our ProfileManager and save the data in a local file
 
 			var rawData:Object = JSON.parse(event.currentTarget.data);

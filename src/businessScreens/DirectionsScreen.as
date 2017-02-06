@@ -182,6 +182,8 @@ package businessScreens
 
 		private function directionsLoaded(event:flash.events.Event):void
 		{
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, directionsLoaded);
+
 			var rawData:Object = JSON.parse(event.currentTarget.data);
 
 			directionsList.dataProvider = new ListCollection(rawData.routes[0].legs[0].steps as Array);

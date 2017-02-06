@@ -190,7 +190,7 @@ package businessScreens
 
 		private function yelpResponse(event:flash.events.Event):void
 		{
-			event.currentTarget.addEventListener(flash.events.Event.COMPLETE, yelpResponse);
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, yelpResponse);
 
 			var layoutForReviewsGroup:VerticalLayout = new VerticalLayout();
 			layoutForReviewsGroup.gap = 10;

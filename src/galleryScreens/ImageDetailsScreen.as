@@ -347,7 +347,7 @@ package galleryScreens
 
 		private function accessTokenLoaded(event:flash.events.Event):void
 		{
-			event.currentTarget.addEventListener(flash.events.Event.COMPLETE, accessTokenLoaded);
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, accessTokenLoaded);
 
 			var rawData:Object = JSON.parse(event.currentTarget.data);
 
@@ -441,7 +441,7 @@ package galleryScreens
 
 		private function commentPosted(event:flash.events.Event):void
 		{
-			event.currentTarget.addEventListener(flash.events.Event.COMPLETE, commentPosted);
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, commentPosted);
 			isOpen = false;
 			PopUpManager.removePopUp(popup, true);
 			loadComments();
@@ -497,7 +497,7 @@ package galleryScreens
 
 		private function viewsUpdated(event:flash.events.Event):void
 		{
-			event.currentTarget.addEventListener(flash.events.Event.COMPLETE, viewsUpdated);
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, viewsUpdated);
 			var rawData:Object = JSON.parse(event.currentTarget.data);
 			viewsLabel.text = rawData.views + " views";
 		}
