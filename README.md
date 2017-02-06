@@ -1,4 +1,4 @@
-# Pizza App 1.0.0
+# Pizza App 1.0.1
 
 Pizza App is a mobile application developed with Starling Framework and FeathersUI. It showcases how to use Firebase services with ActionScript to create a small social network.
 

@@ -41,6 +41,7 @@ package chatScreens
 		private var messagesList:List;
 		private var messageInput:TextInput;
 		private var messagesStream:URLStream;
+		private var sendButton:Button;
 
 		protected var _data:NavigatorData;
 
@@ -118,7 +119,7 @@ package chatScreens
 			sendIcon.source = "assets/icons/send.png";
 			sendIcon.width = sendIcon.height = 25;
 
-			var sendButton:Button = new Button();
+			sendButton = new Button();
 			sendButton.addEventListener(starling.events.Event.TRIGGERED, sendMessage);
 			sendButton.width = sendButton.height = 50;
 			sendButton.defaultIcon = sendIcon;
@@ -202,6 +203,8 @@ package chatScreens
 		private function sendMessage():void
 		{
 			if (messageInput.text != "") {
+				sendButton.isEnabled = false;
+
 				//We prepare the vars to be send to the database, including the logged-in user basic info
 				var myObject:Object = new Object();
 				myObject.message = messageInput.text;
@@ -224,11 +227,14 @@ package chatScreens
 		{
 			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, messageSent);
 			messageInput.text = "";
+			sendButton.isEnabled = true;
 		}
 
 		private function errorHandler(event:IOErrorEvent):void
 		{
 			trace(event.currentTarget.data);
+			event.currentTarget.removeEventListener(IOErrorEvent.IO_ERROR, errorHandler);
+			sendButton.isEnabled = true;
 		}
 
 		private function goBack():void
