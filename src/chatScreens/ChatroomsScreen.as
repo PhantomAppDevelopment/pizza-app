@@ -175,7 +175,7 @@ package chatScreens
 
 		private function accessTokenLoaded(event:flash.events.Event):void
 		{
-			event.currentTarget.addEventListener(flash.events.Event.COMPLETE, accessTokenLoaded);
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, accessTokenLoaded);
 
 			var rawData:Object = JSON.parse(event.currentTarget.data);
 
