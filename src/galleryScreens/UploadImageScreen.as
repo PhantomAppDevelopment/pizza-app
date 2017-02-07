@@ -58,6 +58,8 @@ package galleryScreens
 		private var myBitmapData:BitmapData;
 		private var myTexture:Texture;
 		private var thumbUrl:String;
+		private var imageWidth:Number;
+		private var imageHeight:Number;
 
 		protected var _data:NavigatorData;
 
@@ -324,6 +326,10 @@ package galleryScreens
 			var byteArray:ByteArray = new ByteArray();
 
 			var scaledBitmapData:BitmapData = scaleBMD(myBitmapData, "scale");
+
+			imageWidth = scaledBitmapData.width;
+			imageHeight = scaledBitmapData.height;
+
 			scaledBitmapData.encode(new Rectangle(0, 0, scaledBitmapData.width, scaledBitmapData.height), new JPEGEncoderOptions(), byteArray);
 
 			var header:URLRequestHeader = new URLRequestHeader("Authorization", "Bearer " + _data.FirebaseAuthToken);
@@ -358,6 +364,8 @@ package galleryScreens
 			myObject.title = nameInput.text;
 			myObject.views = 0;
 			myObject.timestamp = new Date().getTime();
+			myObject.width = imageWidth;
+			myObject.height = imageHeight;
 
 			var request:URLRequest = new URLRequest(Constants.FIREBASE_IMAGES_GALLERY_URL + ".json?auth=" + _data.FirebaseAuthToken);
 			request.data = JSON.stringify(myObject);

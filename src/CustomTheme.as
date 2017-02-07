@@ -29,6 +29,7 @@ package
 	import starling.display.DisplayObject;
 	import starling.display.Quad;
 	import starling.text.TextFormat;
+	import starling.textures.Texture;
 
 	import utils.RoundedRect;
 
@@ -36,6 +37,10 @@ package
 	{
 		[Embed(source="assets/fonts/playball.ttf", fontFamily="MyFont", fontWeight="normal", fontStyle="normal", mimeType="application/x-font", embedAsCFF="false")]
 		private static const MY_FONT:Class;
+
+		[Embed(source="assets/icons/loading.png")]
+		private static const LOADING_ASSET:Class;
+		public static const loadingTexture:Texture = Texture.fromEmbeddedAsset(LOADING_ASSET);
 
 		private var playballFont:FontDescription;
 		private var transparentQuad:Quad = new Quad(3, 3, 0xFFFFFF);
