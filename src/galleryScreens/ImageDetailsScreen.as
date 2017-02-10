@@ -19,9 +19,15 @@ package galleryScreens
 	import feathers.layout.VerticalLayoutData;
 	import feathers.utils.textures.TextureCache;
 
+	import flash.display.Bitmap;
+
+	import flash.display.BitmapData;
+	import flash.display.Loader;
+
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
@@ -31,6 +37,7 @@ package galleryScreens
 	import starling.display.DisplayObject;
 	import starling.display.Quad;
 	import starling.events.Event;
+	import starling.textures.Texture;
 	import starling.utils.ScaleMode;
 
 	import utils.NavigatorData;
@@ -42,7 +49,6 @@ package galleryScreens
 
 		private var action:String;
 		private var alert:Alert;
-		private var cache:TextureCache;
 		private var commentInput:TextInput;
 		private var commentsList:List;
 		private var isOpen:Boolean;
@@ -51,6 +57,8 @@ package galleryScreens
 		private var viewsLabel:Label;
 		private var thumbsUpButton:Button;
 		private var thumbsDownButton:Button;
+		private var bigImageBitmapData:BitmapData;
+		private var bigImageTexture:Texture;
 
 		protected var _data:NavigatorData;
 
@@ -107,9 +115,6 @@ package galleryScreens
 			});
 
 			this.headerProperties.rightItems = new <DisplayObject>[downloadButton, postButton];
-
-			cache = new TextureCache();
-
 			this.addEventListener(FeathersEventType.TRANSITION_IN_COMPLETE, transitionComplete);
 		}
 
@@ -117,6 +122,22 @@ package galleryScreens
 		{
 			this.removeEventListener(FeathersEventType.TRANSITION_IN_COMPLETE, transitionComplete);
 
+
+			var loader:Loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(flash.events.Event.COMPLETE, loaderComplete);
+			loader.load(new URLRequest(Constants.FIREBASE_STORAGE_URL + formatUrl(_data.selectedImage.url) + "?alt=media"));
+		}
+
+		private function loaderComplete(event:flash.events.Event):void
+		{
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, loaderComplete);
+			bigImageBitmapData = Bitmap(event.target.content).bitmapData;
+			bigImageTexture = Texture.fromBitmapData(bigImageBitmapData);
+			createUI();
+		}
+
+		private function createUI():void
+		{
 			var ratio:Number = 0;
 
 			if (Number(_data.selectedImage.width) >= stage.stageWidth)
@@ -126,23 +147,12 @@ package galleryScreens
 				ratio = stage.stageWidth / Number(_data.selectedImage.width);
 			}
 
-			var backGroundForImageGroup:ImageLoader = new ImageLoader();
-			backGroundForImageGroup.source = CustomTheme.loadingTexture;
-			backGroundForImageGroup.scaleMode = ScaleMode.NO_BORDER;
-
-			var bigImageGroup:LayoutGroup = new LayoutGroup();
-			bigImageGroup.layoutData = new VerticalLayoutData(100, NaN);
-			bigImageGroup.layout = new VerticalLayout();
-			bigImageGroup.backgroundSkin = backGroundForImageGroup;
-			this.addChild(bigImageGroup);
-
 			var bigImage:ImageLoader = new ImageLoader();
-			bigImage.textureCache = cache;
 			bigImage.layoutData = new VerticalLayoutData(100, NaN);
 			bigImage.minWidth = 1;
 			bigImage.minHeight = _data.selectedImage.height / ratio;
-			bigImage.source = Constants.FIREBASE_STORAGE_URL + formatUrl(_data.selectedImage.url) + "?alt=media";
-			bigImageGroup.addChild(bigImage);
+			bigImage.source = bigImageTexture;
+			this.addChild(bigImage);
 
 			var layoutForInfoGroup:VerticalLayout = new VerticalLayout();
 			layoutForInfoGroup.padding = 10;
@@ -546,7 +556,8 @@ package galleryScreens
 
 		override public function dispose():void
 		{
-			cache.dispose();
+			bigImageBitmapData = null;
+			bigImageTexture.dispose();
 			super.dispose();
 		}
 
