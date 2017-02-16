@@ -17,17 +17,13 @@ package galleryScreens
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
 	import feathers.layout.VerticalLayoutData;
-	import feathers.utils.textures.TextureCache;
 
 	import flash.display.Bitmap;
-
 	import flash.display.BitmapData;
 	import flash.display.Loader;
-
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
-	import flash.net.URLRequest;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
@@ -38,7 +34,6 @@ package galleryScreens
 	import starling.display.Quad;
 	import starling.events.Event;
 	import starling.textures.Texture;
-	import starling.utils.ScaleMode;
 
 	import utils.NavigatorData;
 	import utils.ProfileManager;
@@ -122,7 +117,6 @@ package galleryScreens
 		{
 			this.removeEventListener(FeathersEventType.TRANSITION_IN_COMPLETE, transitionComplete);
 
-
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(flash.events.Event.COMPLETE, loaderComplete);
 			loader.load(new URLRequest(Constants.FIREBASE_STORAGE_URL + formatUrl(_data.selectedImage.url) + "?alt=media"));
@@ -140,8 +134,7 @@ package galleryScreens
 		{
 			var ratio:Number = 0;
 
-			if (Number(_data.selectedImage.width) >= stage.stageWidth)
-			{
+			if (Number(_data.selectedImage.width) >= stage.stageWidth) {
 				ratio = Number(_data.selectedImage.width) / stage.stageWidth;
 			} else {
 				ratio = stage.stageWidth / Number(_data.selectedImage.width);

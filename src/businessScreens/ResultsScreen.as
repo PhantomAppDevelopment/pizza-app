@@ -3,7 +3,6 @@ package businessScreens
 	import feathers.controls.Button;
 	import feathers.controls.ImageLoader;
 	import feathers.controls.Label;
-	import feathers.controls.LayoutGroup;
 	import feathers.controls.List;
 	import feathers.controls.Panel;
 	import feathers.controls.PanelScreen;
@@ -11,7 +10,6 @@ package businessScreens
 	import feathers.core.PopUpManager;
 	import feathers.data.ListCollection;
 	import feathers.events.FeathersEventType;
-	import feathers.layout.HorizontalAlign;
 	import feathers.layout.VerticalLayout;
 	import feathers.layout.VerticalLayoutData;
 
@@ -20,12 +18,12 @@ package businessScreens
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLVariables;
-	import flash.utils.Dictionary;
+
+	import renderers.BusinessRenderer;
 
 	import starling.display.DisplayObject;
 	import starling.display.Quad;
 	import starling.events.Event;
-	import starling.text.TextFormat;
 
 	import utils.NavigatorData;
 
@@ -33,7 +31,6 @@ package businessScreens
 	{
 		public static const GO_DETAILS:String = "goBusinessDetails";
 
-		private var cachedAccessories:Dictionary;
 		private var businessList:List;
 		private var loading:Boolean = false;
 		private var popup:Panel;
@@ -74,67 +71,9 @@ package businessScreens
 			rightMenuButton.defaultIcon = rightMenuIcon;
 			this.headerProperties.rightItems = new <DisplayObject>[rightMenuButton];
 
-			var layoutForAccessories:VerticalLayout = new VerticalLayout();
-			layoutForAccessories.horizontalAlign = HorizontalAlign.CENTER;
-			layoutForAccessories.gap = 5;
-
-			cachedAccessories = new Dictionary();
-
 			businessList = new List();
 			businessList.layoutData = new VerticalLayoutData(100, 100);
-			businessList.itemRendererFactory = function ():DefaultListItemRenderer
-			{
-				var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
-				renderer.isQuickHitAreaEnabled = true;
-				renderer.height = 80;
-
-				renderer.labelFunction = function (item:Object):String
-				{
-					return "<b>" + item.name + "</b>" + "\n" + item.location.address1;
-				};
-
-				renderer.iconSourceFunction = function (item:Object):String
-				{
-					var path:String = item.image_url;
-					path = path.substr(0, path.length - 5);
-					return path + "m.jpg";
-				};
-
-				renderer.iconLoaderFactory = function ():ImageLoader
-				{
-					var loader:ImageLoader = new ImageLoader();
-					loader.width = loader.height = 60;
-					return loader;
-				};
-
-				renderer.accessoryFunction = function (item:Object):DisplayObject
-				{
-					if (item in cachedAccessories) {
-						return cachedAccessories[item];
-					}
-
-					var group:LayoutGroup = new LayoutGroup();
-					group.layout = layoutForAccessories;
-
-					var ratingImage:ImageLoader = new ImageLoader();
-					ratingImage.width = 65;
-					ratingImage.height = 15;
-					ratingImage.source = "assets/yelp/" + item.rating + ".png";
-					group.addChild(ratingImage);
-
-					var ratingLabel:Label = new Label();
-					ratingLabel.fontStyles = new TextFormat("_sans", 10, 0x00000, "center");
-					ratingLabel.text = item.review_count + " review(s)";
-					ratingLabel.width = 75;
-					group.addChild(ratingLabel);
-
-					cachedAccessories[item] = group;
-
-					return group;
-				};
-
-				return renderer;
-			};
+			businessList.itemRendererType = BusinessRenderer;
 			this.addChild(businessList);
 
 			this.addEventListener(FeathersEventType.TRANSITION_IN_COMPLETE, transitionComplete);
@@ -235,12 +174,10 @@ package businessScreens
 				var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
 				renderer.accessorySourceFunction = function ():String
 				{
-
 					if (distancesList.selectedIndex == renderer.index) {
 						return "assets/icons/radio_checked.png";
 					} else {
 						return "assets/icons/radio_unchecked.png";
-
 					}
 				}
 
@@ -328,8 +265,6 @@ package businessScreens
 			businessList.removeEventListener(starling.events.Event.CHANGE, changeHandler);
 			businessList.removeEventListener(starling.events.Event.SCROLL, scrollHandler);
 			businessList.dataProvider = null;
-
-			cachedAccessories = null;
 
 			this.dispatchEventWith(starling.events.Event.COMPLETE);
 		}

@@ -64,13 +64,8 @@ package newsScreens
 
 		private function goBack():void
 		{
-			this.dispatchEventWith(Event.COMPLETE);
-		}
-
-		override public function dispose():void
-		{
 			this.removeChild(webView, true);
-			super.dispose();
+			this.dispatchEventWith(Event.COMPLETE);
 		}
 
 	}
