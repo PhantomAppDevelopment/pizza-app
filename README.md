@@ -1,4 +1,4 @@
-# Pizza App 1.0.1
+# Pizza App 1.1.0
 
 Pizza App is a mobile application developed with Starling Framework and FeathersUI. It showcases how to use Firebase services with ActionScript to create a small social network.
 
@@ -21,9 +21,13 @@ Some of the techniques covered are:
 * Correctly disposing unused objects.
 * Multi DPI development.
 
-To compile this application you require to provide your own Yelp Fusion API Key and Secret. You will also need to provide your Firebase API key which can be obtained for free on the Firebase developer console (see below), this project only works with Firebase V3 and its newer console located at https://console.firebase.google.com/ 
+## Dependencies
 
-AIR 23 or greater is required, FeathersUI 3.1.0 and Starling 2.1 are required as well.
+* [Starling Framework 2.1](http://gamua.com/starling/)
+* [FeathersUI 3.2.0](https://feathersui.com/)
+* [Adobe AIR 25](http://www.adobe.com/devnet/air/air-sdk-download.html)
+
+To compile this application you require to provide your own Yelp Fusion API Key and Secret. You will also need to provide your Firebase API key which can be obtained for free on the Firebase developer console (see below), this project only works with Firebase V3 and its newer console located at https://console.firebase.google.com/ 
 
 ## What is Firebase?
 
