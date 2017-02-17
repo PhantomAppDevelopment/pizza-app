@@ -1,19 +1,15 @@
 package renderers
 {
-	import feathers.controls.ButtonState;
 	import feathers.controls.Label;
 	import feathers.controls.LayoutGroup;
 	import feathers.controls.renderers.LayoutGroupListItemRenderer;
 	import feathers.layout.AnchorLayout;
 	import feathers.layout.AnchorLayoutData;
 	import feathers.layout.VerticalLayout;
+	import feathers.utils.touch.DelayedDownTouchToState;
 	import feathers.utils.touch.TapToSelect;
 
 	import starling.display.Quad;
-	import starling.events.Event;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
 	import starling.text.TextFormat;
 
 	public class NewsRenderer extends LayoutGroupListItemRenderer
@@ -24,35 +20,36 @@ package renderers
 		private var _dayLabel:Label;
 		private var _monthLabel:Label;
 		private var _select:TapToSelect;
-		private var _currentState = ButtonState.UP;
-		protected var touchID:int = -1;
-
-		public function get currentState():String
-		{
-			return this._currentState;
-		}
-
-		public function set currentState(value:String):void
-		{
-			if (this._currentState == value) {
-				return;
-			}
-			this._currentState = value;
-			this.invalidate(INVALIDATION_FLAG_STATE);
-		}
+		private var _delay:DelayedDownTouchToState;
 
 		public function NewsRenderer()
 		{
 			super();
-			this._select = new TapToSelect(this); //This helper allows our ItemRenderer to dispatch the starling.events.Event.CHANGE event.
+			this._select = new TapToSelect(this);
+			this._delay = new DelayedDownTouchToState(this, changeState);
+		}
+
+		private function changeState(currentState:String):void
+		{
+			if(this._data)
+			{
+				if(currentState == "up")
+				{
+					this.backgroundSkin = new Quad(3, 3, 0xFFFFFF);
+					this._newsLabel.fontStyles.color = 0x000000;
+				}
+
+				else if(currentState == "down")
+				{
+					this.backgroundSkin = new Quad(3, 3, 0xD50000);
+					this._newsLabel.fontStyles.color = 0xFFFFFF;
+				}
+			}
 		}
 
 		override protected function initialize():void
 		{
 			super.initialize();
-
-			this.addEventListener(TouchEvent.TOUCH, touchHandler);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 
 			this.layout = new AnchorLayout();
 			this.height = 80;
@@ -89,6 +86,7 @@ package renderers
 			if (this._data && this._owner) {
 
 				this.backgroundSkin = new Quad(3, 3, 0xFFFFFF);
+				this._newsLabel.fontStyles.color = 0x000000;
 
 				var itemDate:Date = new Date(String(_data.pubDate));
 				_monthLabel.text = String(monthNames[itemDate.month]);
@@ -99,50 +97,6 @@ package renderers
 			} else {
 				_newsLabel.text = "";
 			}
-		}
-
-		private function touchHandler(event:TouchEvent):void
-		{
-			if (!this._isEnabled) {
-				this.touchID = -1;
-				this.currentState = ButtonState.UP;
-				return;
-			}
-
-			if (this.touchID >= 0) {
-				var touch:Touch = event.getTouch(this, null, this.touchID);
-
-				if (!touch) {
-					return;
-				}
-
-				if (touch.phase == TouchPhase.ENDED) {
-					this.currentState = ButtonState.UP;
-					this.backgroundSkin = new Quad(3, 3, 0xFFFFFF);
-					this._newsLabel.fontStyles.color = 0x000000;
-
-					this.touchID = -1;
-				}
-				return;
-			}
-			else {
-				touch = event.getTouch(this, TouchPhase.BEGAN);
-
-				if (!touch) {
-					return;
-				}
-
-				this.currentState = ButtonState.DOWN;
-				this.backgroundSkin = new Quad(3, 3, 0xD50000);
-				this._newsLabel.fontStyles.color = 0xFFFFFF;
-
-				this.touchID = touch.id;
-			}
-		}
-
-		private function removedFromStageHandler(event:Event):void
-		{
-			this.touchID = -1;
 		}
 
 	}

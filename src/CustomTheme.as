@@ -19,7 +19,9 @@ package
 	import feathers.core.FeathersControl;
 	import feathers.core.ITextEditor;
 	import feathers.core.ITextRenderer;
+	import feathers.layout.Direction;
 	import feathers.layout.HorizontalAlign;
+	import feathers.layout.RelativePosition;
 	import feathers.layout.VerticalAlign;
 	import feathers.themes.StyleNameFunctionTheme;
 
@@ -123,7 +125,7 @@ package
 
 			alert.headerProperties.paddingLeft = 10;
 			alert.headerProperties.gap = 10;
-			alert.headerProperties.titleAlign = Header.TITLE_ALIGN_PREFER_LEFT;
+			alert.headerProperties.titleAlign = HorizontalAlign.LEFT;
 			alert.fontStyles = new TextFormat("_sans", 14, 0x000000, "left");
 			alert.fontStyles.leading = 7;
 
@@ -131,7 +133,7 @@ package
 			{
 				var group:ButtonGroup = new ButtonGroup();
 				group.customButtonStyleName = "alert-button";
-				group.direction = ButtonGroup.DIRECTION_HORIZONTAL;
+				group.direction = Direction.HORIZONTAL;
 				group.gap = 10;
 				group.padding = 10;
 				return group;
@@ -196,7 +198,7 @@ package
 
 		private function setHorizontalButtonStyles(button:Button):void
 		{
-			button.iconPosition = Button.ICON_POSITION_LEFT;
+			button.iconPosition = RelativePosition.LEFT;
 			button.horizontalAlign = HorizontalAlign.LEFT;
 			button.verticalAlign = VerticalAlign.MIDDLE;
 			button.gap = 10;
@@ -207,7 +209,7 @@ package
 
 		private function setVerticalButtonStyles(button:Button):void
 		{
-			button.iconPosition = Button.ICON_POSITION_TOP;
+			button.iconPosition = RelativePosition.TOP;
 			button.horizontalAlign = HorizontalAlign.CENTER;
 			button.paddingLeft = 15;
 			button.fontStyles = new TextFormat("_sans", 16, 0x000000, "center");
@@ -234,7 +236,7 @@ package
 			header.fontStyles = new TextFormat("_sans", 16, 0xFFFFFF, "left");
 			header.gap = 5;
 			header.paddingLeft = header.paddingRight = 2;
-			header.titleAlign = Header.TITLE_ALIGN_PREFER_LEFT;
+			header.titleAlign = HorizontalAlign.LEFT;
 
 			var skin:Quad = new Quad(3, 50);
 			skin.setVertexColor(0, 0x0277BD);
@@ -281,7 +283,7 @@ package
 		{
 			renderer.defaultSelectedSkin = new Quad(3, 3, 0xD50000);
 			renderer.downSkin = new Quad(3, 3, 0xD50000);
-			renderer.horizontalAlign = Button.HORIZONTAL_ALIGN_LEFT;
+			renderer.horizontalAlign = HorizontalAlign.LEFT;
 			renderer.paddingLeft = 10;
 			renderer.paddingRight = 10;
 			renderer.paddingTop = 5;
@@ -289,8 +291,8 @@ package
 			renderer.gap = 10;
 			renderer.minHeight = 50;
 			renderer.accessoryGap = Number.POSITIVE_INFINITY;
-			renderer.iconPosition = Button.ICON_POSITION_LEFT;
-			renderer.accessoryPosition = BaseDefaultItemRenderer.ACCESSORY_POSITION_RIGHT;
+			renderer.iconPosition = RelativePosition.LEFT;
+			renderer.accessoryPosition = RelativePosition.RIGHT;
 			renderer.isQuickHitAreaEnabled = true;
 
 			var blackFormat:TextFormat = new TextFormat("_sans", 14, 0x000000, "left", "center");
@@ -318,8 +320,8 @@ package
 		{
 			renderer.defaultSelectedSkin = new Quad(3, 3, 0x01579B);
 			renderer.downSkin = new Quad(3, 3, 0x01579B);
-			renderer.horizontalAlign = Button.HORIZONTAL_ALIGN_LEFT;
-			renderer.verticalAlign = Button.VERTICAL_ALIGN_MIDDLE;
+			renderer.horizontalAlign = HorizontalAlign.LEFT;
+			renderer.verticalAlign = VerticalAlign.MIDDLE;
 			renderer.paddingLeft = 10;
 			renderer.paddingRight = 10;
 			renderer.paddingTop = 5;
@@ -327,8 +329,8 @@ package
 			renderer.gap = 10;
 			renderer.minHeight = 45;
 			renderer.accessoryGap = Number.POSITIVE_INFINITY;
-			renderer.iconPosition = Button.ICON_POSITION_LEFT;
-			renderer.accessoryPosition = BaseDefaultItemRenderer.ACCESSORY_POSITION_RIGHT;
+			renderer.iconPosition = RelativePosition.LEFT;
+			renderer.accessoryPosition = RelativePosition.RIGHT;
 			renderer.isQuickHitAreaEnabled = true;
 			renderer.fontStyles = new TextFormat("_sans", 14, 0xFFFFFF, "left");
 		}

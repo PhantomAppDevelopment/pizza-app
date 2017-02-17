@@ -65,19 +65,19 @@ package newsScreens
 			mainGroup.backgroundSkin = new Quad(3, 3, 0xFFFFFF);
 			this.addChild(mainGroup);
 
-			pizzaNewsLabel = new Label();
-			pizzaNewsLabel.alpha = 0;
-			pizzaNewsLabel.styleNameList.add("big-label");
-			pizzaNewsLabel.text = "Pizza News";
-			pizzaNewsLabel.layoutData = new AnchorLayoutData(10, NaN, NaN, NaN, -50, NaN);
-			this.addChild(pizzaNewsLabel);
-
 			this.addEventListener(FeathersEventType.TRANSITION_IN_COMPLETE, transitionComplete);
 		}
 
 		private function transitionComplete(event:starling.events.Event):void
 		{
 			this.removeEventListener(FeathersEventType.TRANSITION_IN_COMPLETE, transitionComplete);
+
+			pizzaNewsLabel = new Label();
+			pizzaNewsLabel.alpha = 0;
+			pizzaNewsLabel.styleNameList.add("big-label");
+			pizzaNewsLabel.text = "Pizza News";
+			pizzaNewsLabel.layoutData = new AnchorLayoutData(10, NaN, NaN, NaN, -50, NaN);
+			this.addChild(pizzaNewsLabel);
 
 			var pizzaNewsLabelFade:Tween = new Tween(pizzaNewsLabel, 0.5);
 			pizzaNewsLabelFade.animate("alpha", 1);
