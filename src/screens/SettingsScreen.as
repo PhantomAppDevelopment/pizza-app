@@ -183,7 +183,7 @@ package screens
 
 		private function accessTokenLoaded(event:flash.events.Event):void
 		{
-			event.currentTarget.remvedEventListener(flash.events.Event.COMPLETE, accessTokenLoaded);
+			event.currentTarget.removeEventListener(flash.events.Event.COMPLETE, accessTokenLoaded);
 
 			var rawData:Object = JSON.parse(event.currentTarget.data);
 
